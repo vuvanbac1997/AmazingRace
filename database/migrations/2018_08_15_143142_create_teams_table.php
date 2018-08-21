@@ -18,6 +18,7 @@ class CreateteamsTable extends Migration
             $table->string('display_name');
             $table->string('password');
             $table->bigInteger('id_company');
+            $table->bigInteger('id_coach');
             // Add some more columns
              $table->bigInteger('last_notification_id')->default(0);
 

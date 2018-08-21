@@ -47,7 +47,6 @@ Players
             <tr>
                 <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
                 <th>{!! \PaginationHelper::sort('name', trans('admin.pages.players.columns.name')) !!}</th>
-                <th>{!! \PaginationHelper::sort('id_coach', trans('admin.pages.players.columns.id_coach')) !!}</th>
                 <th>{!! \PaginationHelper::sort('id_team', trans('admin.pages.players.columns.id_team')) !!}</th>
 
                 <th style="width: 40px">{!! \PaginationHelper::sort('is_enabled', trans('admin.pages.common.label.is_enabled')) !!}</th>
@@ -57,8 +56,7 @@ Players
                 <tr>
                     <td>{{ $player->id }}</td>
                <td>{{ $player->name }}</td>
-               <td>{{ $player->id_coach }}</td>
-               <td>{{ $player->id_team }}</td>
+               <td>{{ $player->team->display_name }}</td>
 
                     <td>
                         @if( $player->is_enabled )

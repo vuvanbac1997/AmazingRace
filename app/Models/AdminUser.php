@@ -88,6 +88,11 @@ class AdminUser extends AuthenticatableBase
         return $this->belongsTo('App\Models\Image', 'profile_image_id', 'id');
     }
 
+    public function team()
+    {
+        return $this->hasMany('App\Models\Team', 'id', 'id_coach');
+    }
+
     public function roles()
     {
         return $this->hasMany('App\Models\AdminUserRole', 'admin_user_id', 'id');

@@ -100,8 +100,8 @@ return [
             'local_type'  => 'common',
             'local_path'  => 'img/ogp/'
         ],
-        'building_cover_image'       => [
-            'name'        => 'building_cover_image',
+        'player_cover_image'       => [
+            'name'        => 'player_cover_image',
             'type'        => 'image',
             'region'      => env('AWS_IMAGE_REGION'),
             'buckets'     => [
@@ -109,13 +109,13 @@ return [
             ],
             'size'        => [1400, 900],
             'thumbnails'  => [],
-            'seed_prefix' => 'building_cover_image',
+            'seed_prefix' => 'players_cover_image',
             'format'      => 'png',
             'local_type'  => 'common',
-            'local_path'  => 'img/buildings/'
+            'local_path'  => 'img/players/'
         ],
-        'resident_cover_image'       => [
-            'name'        => 'resident_cover_image',
+        'team_profile_image'       => [
+            'name'        => 'team_profile_image',
             'type'        => 'image',
             'region'      => env('AWS_IMAGE_REGION'),
             'buckets'     => [
@@ -123,10 +123,10 @@ return [
             ],
             'size'        => [1400, 900],
             'thumbnails'  => [],
-            'seed_prefix' => 'resident_cover_image',
+            'seed_prefix' => 'team_cover_image',
             'format'      => 'png',
             'local_type'  => 'common',
-            'local_path'  => 'img/residents/'
+            'local_path'  => 'img/teams/'
         ],
     ],
 ];

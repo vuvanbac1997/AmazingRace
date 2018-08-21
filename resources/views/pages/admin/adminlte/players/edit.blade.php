@@ -62,34 +62,28 @@
             <div class="box-body">
                 
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <div class="form-group text-center">
-                                @if( !empty($player->coverImage) )
-                                    <img id="cover-image-preview"  style="max-width: 500px; width: 100%;" src="{!! $player->present()->coverImage->present()->url !!}" alt="" class="margin" />
+                                @if( !empty($player->present()->coverImage() ) )
+                                    <img id="cover-image-preview"  style="max-width: 500px; width: 100%;" src="{!! $player->present()->coverImage()->present()->url !!}" alt="" class="margin" />
                                 @else
                                     <img id="cover-image-preview" style="max-width: 500px; width: 100%;" src="{!! \URLHelper::asset('img/no_image.jpg', 'common') !!}" alt="" class="margin" />
                                 @endif
-                                <input type="file" style="display: none;"  id="cover-image" name="cover_image">
+                                <input type="file" style="display: none;"  id="cover-image" name="cover-image">
                                 <p class="help-block" style="font-weight: bolder;">
                                     @lang('admin.pages.players.columns.cover_image_id')
                                     <label for="cover-image" style="font-weight: 100; color: #549cca; margin-left: 10px; cursor: pointer;">@lang('admin.pages.common.buttons.edit')</label>
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-7">
                             <div class="form-group @if ($errors->has('name')) has-error @endif">
                                 <label for="name">@lang('admin.pages.players.columns.name')</label>
                                 <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') ? old('name') : $player->name }}">
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group @if ($errors->has('id_coach')) has-error @endif">
-                                <label for="id_coach">@lang('admin.pages.players.columns.id_coach')</label>
-                                <input type="text" class="form-control" id="id_coach" name="id_coach" required value="{{ old('id_coach') ? old('id_coach') : $player->id_coach }}">
-                            </div>
-                        </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-7">
                             <div class="form-group @if ($errors->has('id_team')) has-error @endif">
                                 <label for="id_team">@lang('admin.pages.players.columns.id_team')</label>
                                 <select class="form-control" id="id_team" name="id_team" required>

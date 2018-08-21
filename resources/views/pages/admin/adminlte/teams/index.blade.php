@@ -49,6 +49,7 @@ Teams
                 <th>{!! \PaginationHelper::sort('username', trans('admin.pages.teams.columns.username')) !!}</th>
                 <th>{!! \PaginationHelper::sort('display_name', trans('admin.pages.teams.columns.display_name')) !!}</th>
                 <th>{!! \PaginationHelper::sort('password', trans('admin.pages.teams.columns.password')) !!}</th>
+                <th>{!! \PaginationHelper::sort('id_coach', trans('admin.pages.teams.columns.id_coach')) !!}</th>
                 <th>{!! \PaginationHelper::sort('id_company', trans('admin.pages.teams.columns.id_company')) !!}</th>
                 <th>{!! \PaginationHelper::sort('is_activated', trans('admin.pages.teams.columns.is_activated')) !!}</th>
 
@@ -57,10 +58,11 @@ Teams
             @foreach( $teams as $team )
                 <tr>
                     <td>{{ $team->id }}</td>
-                   <td>{{ $team->username }}</td>
-                   <td>{{ $team->display_name }}</td>
-                   <td>{{ $team->password }}</td>
-                   <td>{{ $team->company->name }}</td>
+                    <td>{{ $team->username }}</td>
+                    <td>{{ $team->display_name }}</td>
+                    <td>{{ $team->password }}</td>
+                    <td>{{ $team->coach->name }}</td>
+                    <td>{{ $team->company->name }}</td>
 
                     <td>
                         @if( $team->is_activated )

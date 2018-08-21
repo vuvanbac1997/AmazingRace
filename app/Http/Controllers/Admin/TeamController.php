@@ -7,6 +7,8 @@ use App\Repositories\TeamRepositoryInterface;
 use App\Repositories\CompanyRepositoryInterface;
 use App\Http\Requests\Admin\TeamRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Repositories\AdminUserRepositoryInterface;
+use App\Services\AdminUserServiceInterface;
 
 class TeamController extends Controller
 {
@@ -17,13 +19,23 @@ class TeamController extends Controller
     /** @var \App\Repositories\CompanyRepositoryInterface */
     protected $companyRepository;
 
+    /** @var \App\Repositories\AdminUserRepositoryInterface */
+    protected $adminuserRepository;
+
+    /** @var \App\Services\AdminUserServiceInterface */
+    protected $adminUserService;
+
     public function __construct(
         TeamRepositoryInterface $teamRepository,
-        CompanyRepositoryInterface $companyRepository
+        CompanyRepositoryInterface $companyRepository,
+        AdminUserRepositoryInterface $adminUserRepository,
+        AdminUserServiceInterface   $adminUserService
     )
     {
         $this->teamRepository = $teamRepository;
         $this->companyRepository = $companyRepository;
+        $this->adminuserRepository = $adminUserRepository;
+                $this->adminUserService     = $adminUserService;
     }
 
     /**
@@ -60,12 +72,14 @@ class TeamController extends Controller
      */
     public function create()
     {
+
         return view(
             'pages.admin.' . config('view.admin') . '.teams.edit',
             [
                 'isNew'     => true,
                 'team' => $this->teamRepository->getBlankModel(),
-                'companies'=> $this->companyRepository->all()
+                'companies'=> $this->companyRepository->all(),
+                'coachs'    => $this->adminUserService->getAllCoach()
             ]
         );
     }
@@ -78,8 +92,8 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request)
     {
-        $input = $request->only(['username','display_name','password','id_company','api_access_token','is_activated','remember_token']);
-        
+        $input = $request->only(['username','display_name','password','id_coach','id_company','api_access_token','is_activated','remember_token']);
+
         $input['is_enabled'] = $request->get('is_enabled', 0);
         $team = $this->teamRepository->create($input);
 
@@ -109,7 +123,8 @@ class TeamController extends Controller
             [
                 'isNew' => false,
                 'team' => $team,
-                'companies'=> $this->companyRepository->all()
+                'companies'=> $this->companyRepository->all(),
+                'coachs'    => $this->adminUserService->getAllCoach()
             ]
         );
     }
@@ -139,8 +154,8 @@ class TeamController extends Controller
         if (empty( $team )) {
             abort(404);
         }
-        $input = $request->only(['username','display_name','password','id_company','api_access_token','is_activated','remember_token']);
-        
+        $input = $request->only(['username','display_name','password','id_coach','id_company','api_access_token','is_activated','remember_token']);
+
         $input['is_enabled'] = $request->get('is_enabled', 0);
         $this->teamRepository->update($team, $input);
 

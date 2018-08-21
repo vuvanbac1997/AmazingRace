@@ -7,6 +7,7 @@ use App\Repositories\PlayerRepositoryInterface;
 use App\Repositories\TeamRepositoryInterface;
 use App\Http\Requests\Admin\PlayerRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Services\FileUploadServiceInterface;
 
 class PlayerController extends Controller
 {
@@ -17,13 +18,18 @@ class PlayerController extends Controller
     /** @var \App\Repositories\TeamRepositoryInterface */
     protected $teamRepository;
 
+    /** @var FileUploadServiceInterface $fileUploadService */
+    protected $fileUploadService;
+
     public function __construct(
         PlayerRepositoryInterface $playerRepository,
-        TeamRepositoryInterface $teamRepository
+        TeamRepositoryInterface $teamRepository,
+        FileUploadServiceInterface $fileUploadService
     )
     {
         $this->playerRepository = $playerRepository;
         $this->teamRepository = $teamRepository;
+        $this->fileUploadService = $fileUploadService;
     }
 
     /**
@@ -87,6 +93,23 @@ class PlayerController extends Controller
             return redirect()->back()->withErrors(trans('admin.errors.general.save_failed'));
         }
 
+        if ($request->hasFile('cover-image')) {
+            $file       = $request->file('cover-image');
+            $image = $this->fileUploadService->upload(
+                'player_cover_image',
+                $file,
+                [
+                    'entity_type' => 'player_cover_image',
+                    'entity_id'   => $player->id,
+                    'title'       => $request->input('name', ''),
+                ]
+            );
+
+            if (!empty($image)) {
+                $this->playerRepository->update($player, ['cover_image_id' => $image->id]);
+            }
+        }
+
         return redirect()->action('Admin\PlayerController@index')
             ->with('message-success', trans('admin.messages.general.create_success'));
     }
@@ -109,6 +132,7 @@ class PlayerController extends Controller
             [
                 'isNew' => false,
                 'player' => $player,
+                'teams'  => $this->teamRepository->all(),
             ]
         );
     }
@@ -142,6 +166,29 @@ class PlayerController extends Controller
         
         $input['is_enabled'] = $request->get('is_enabled', 0);
         $this->playerRepository->update($player, $input);
+
+        if ($request->hasFile('cover-image')) {
+            $currentImage = $player->coverImage;
+            $file = $request->file('cover-image');
+            
+            $newImage = $this->fileUploadService->upload(
+                'player_cover_image',
+                $file,
+                [
+                    'entity_type' => 'player_cover_image',
+                    'entity_id'   => $player->id,
+                    'title'       => $request->input('name', ''),
+                ]
+            );
+
+            if (!empty($newImage)) {
+                $input['cover_image_id'] = $newImage->id;
+
+                if (!empty($currentImage)) {
+                    $this->fileUploadService->delete($currentImage);
+                }
+            }
+        }
 
         return redirect()->action('Admin\PlayerController@show', [$id])
                     ->with('message-success', trans('admin.messages.general.update_success'));

@@ -23,6 +23,7 @@ class Team extends Base
         'username',
         'display_name',
         'password',
+        'id_coach',
         'id_company',
 
         'profile_image_id',
@@ -60,7 +61,7 @@ class Team extends Base
 
     public function players()
     {
-        return $this->hasMany(App\Models\Player::class, 'id', 'id_team');
+        return $this->hasMany(\App\Models\Player::class, 'id', 'id_team');
     }
 
     public function company()
@@ -68,6 +69,10 @@ class Team extends Base
         return $this->belongsTo(\App\Models\Company::class, 'id_company', 'id');
     }
 
+    public function coach()
+    {
+        return $this->belongsTo(\App\Models\AdminUser::class, 'id_coach', 'id');
+    }
 
     // Utility Functions
 

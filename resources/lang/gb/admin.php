@@ -241,6 +241,7 @@ return [
                 'profile_image_id' => 'Profile_image_id',
                 'is_activated' => 'Playing',
                 'remember_token' => 'Remember_token',
+                'id_coach'  => 'Coach',
             ],
         ],
 

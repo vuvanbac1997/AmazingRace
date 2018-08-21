@@ -21,7 +21,6 @@ class Player extends Base
      */
     protected $fillable = [
         'name',
-        'id_coach',
         'id_team',
         'cover_image_id',
     ];
@@ -49,6 +48,10 @@ class Player extends Base
         return $this->hasOne(\App\Models\Image::class, 'id', 'cover_image_id');
     }
 
+    public function team()
+    {
+        return $this->belongsTo(\App\Models\Team::class, 'id_team', 'id');
+    }
     
 
     // Utility Functions

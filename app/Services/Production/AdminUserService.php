@@ -33,4 +33,14 @@ class AdminUserService extends AuthenticatableService implements AdminUserServic
     {
         return 'admins';
     }
+
+    public function getAllCoach()
+    {
+        // pluck trả về giá trị 1 cột
+        $coachIds = $this->adminUserRoleRepository->getBlankModel()->where('role', AdminUserRole::ROLE_COACH)->get()->pluck('admin_user_id')->toArray();
+
+        $coachs = $this->authenticatableRepository->getBlankModel()->whereIn('id', $coachIds)->get();
+
+        return $coachs;
+    }
 }

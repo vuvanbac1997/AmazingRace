@@ -13,7 +13,9 @@ class PlayerRepository extends SingleKeyModelRepository implements PlayerReposit
 
     public function rules()
     {
+
         return [
+            
         ];
     }
 
