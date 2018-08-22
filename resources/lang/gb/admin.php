@@ -253,6 +253,14 @@ return [
                 'description' => 'Description',
             ],
         ],
+        'teams'   => [
+            'columns'  => [
+                'username' => 'Username',
+                'display_name' => 'Display_name',
+                'password' => 'Password',
+                'cover_image_id' => 'Cover_image_id',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

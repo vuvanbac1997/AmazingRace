@@ -153,15 +153,6 @@ $factory->define(
         ];
     }
 );
-$factory->define(App\Models\Player::class, function (Faker\Generator $faker) {
-    return [
-        'id' => '',
-        'name' => '',
-        'id_coach' => '',
-        'id_team' => '',
-        'cover_image_id' => '',
-    ];
-});
 
 $factory->define(App\Models\Team::class, function (Faker\Generator $faker) {
     return [
@@ -169,37 +160,7 @@ $factory->define(App\Models\Team::class, function (Faker\Generator $faker) {
         'username' => '',
         'display_name' => '',
         'password' => '',
-        'id_company' => '',
-        'last_notification_id' => '',
-        'api_access_token' => '',
-        'profile_image_id' => '',
-        'is_activated' => '',
-        'remember_token' => '',
-    ];
-});
-
-$factory->define(App\Models\Company::class, function (Faker\Generator $faker) {
-    return [
-    ];
-});
-
-$factory->define(App\Models\Player::class, function (Faker\Generator $faker) {
-    return [
-        'id' => '',
-        'name' => '',
-        'id_coach' => '',
-        'id_team' => '',
         'cover_image_id' => '',
-    ];
-});
-
-$factory->define(App\Models\Company::class, function (Faker\Generator $faker) {
-    return [
-        'id' => '',
-        'name' => '',
-        'address' => '',
-        'phone' => '',
-        'description' => '',
     ];
 });
 

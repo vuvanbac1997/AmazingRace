@@ -43,29 +43,25 @@ Teams
         </div>
     </div>
     <div class="box-body" style=" overflow-x: scroll; ">
-        <table class="table table-bordered text-center">
+        <table class="table table-bordered">
             <tr>
                 <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
                 <th>{!! \PaginationHelper::sort('username', trans('admin.pages.teams.columns.username')) !!}</th>
                 <th>{!! \PaginationHelper::sort('display_name', trans('admin.pages.teams.columns.display_name')) !!}</th>
                 <th>{!! \PaginationHelper::sort('password', trans('admin.pages.teams.columns.password')) !!}</th>
-                <th>{!! \PaginationHelper::sort('id_coach', trans('admin.pages.teams.columns.id_coach')) !!}</th>
-                <th>{!! \PaginationHelper::sort('id_company', trans('admin.pages.teams.columns.id_company')) !!}</th>
-                <th>{!! \PaginationHelper::sort('is_activated', trans('admin.pages.teams.columns.is_activated')) !!}</th>
 
+                <th style="width: 40px">{!! \PaginationHelper::sort('is_enabled', trans('admin.pages.common.label.is_enabled')) !!}</th>
                 <th style="width: 40px">@lang('admin.pages.common.label.actions')</th>
             </tr>
             @foreach( $teams as $team )
                 <tr>
                     <td>{{ $team->id }}</td>
-                    <td>{{ $team->username }}</td>
-                    <td>{{ $team->display_name }}</td>
-                    <td>{{ $team->password }}</td>
-                    <td>{{ $team->coach->name }}</td>
-                    <td>{{ $team->company->name }}</td>
+               <td>{{ $team->username }}</td>
+               <td>{{ $team->display_name }}</td>
+               <td>{{ $team->password }}</td>
 
                     <td>
-                        @if( $team->is_activated )
+                        @if( $team->is_enabled )
                             <span class="badge bg-green">@lang('admin.pages.common.label.is_enabled_true')</span>
                         @else
                             <span class="badge bg-red">@lang('admin.pages.common.label.is_enabled_false')</span>

@@ -33,10 +33,7 @@
         \Route::get('/me/notifications', 'Admin\MeController@notifications');
 
         \Route::post('signout', 'Admin\AuthController@postSignOut');
-        \Route::resource('players', 'Admin\PlayerController');
         \Route::resource('teams', 'Admin\TeamController');
-        \Route::resource('companies', 'Admin\CompanyController');
-        \Route::resource('companies', 'Admin\CompanyController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });

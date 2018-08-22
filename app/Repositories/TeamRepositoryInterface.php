@@ -2,4 +2,5 @@
 
 interface TeamRepositoryInterface extends SingleKeyModelRepositoryInterface
 {
+	public function checkTeam($username);
 }

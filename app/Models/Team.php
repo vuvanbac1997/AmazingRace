@@ -1,11 +1,16 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\HasApiTokens;
 
-class Team extends Base
-{
+class Team extends AuthenticatableBase
+{   
+    use HasApiTokens;
 
-    use SoftDeletes;
+    const DEFAULT_PASSWORD = 'team_api';
+
+    //use SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -23,12 +28,7 @@ class Team extends Base
         'username',
         'display_name',
         'password',
-        'id_coach',
-        'id_company',
-
-        'profile_image_id',
-        'is_activated',
-
+        'cover_image_id',
     ];
 
     /**
@@ -48,31 +48,28 @@ class Team extends Base
         parent::observe(new \App\Observers\TeamObserver);
     }
 
+    public function findForPassport($identifier)
+    {
+        return $this->where('username', $identifier)->first();
+    }
+
+    public function getAuthPassword() 
+    { 
+        return Hash::make(self::DEFAULT_PASSWORD); 
+ 
+    }
+
+    public function accessTokens() 
+    { 
+        return $this->hasMany(\App\Models\OauthAccessToken::class, 'user_id', 'id'); 
+    } 
     // Relations
-    public function lastNotification()
+    public function coverImage()
     {
-        return $this->belongsTo(\App\Models\LastNotification::class, 'last_notification_id', 'id');
+        return $this->hasOne(\App\Models\Image::class, 'id', 'cover_image_id');
     }
 
-    public function profileImage()
-    {
-        return $this->hasOne(\App\Models\Image::class, 'id', 'profile_image_id');
-    }
-
-    public function players()
-    {
-        return $this->hasMany(\App\Models\Player::class, 'id', 'id_team');
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(\App\Models\Company::class, 'id_company', 'id');
-    }
-
-    public function coach()
-    {
-        return $this->belongsTo(\App\Models\AdminUser::class, 'id_coach', 'id');
-    }
+    
 
     // Utility Functions
 
@@ -86,12 +83,7 @@ class Team extends Base
             'username' => $this->username,
             'display_name' => $this->display_name,
             'password' => $this->password,
-            'id_company' => $this->id_company,
-            'last_notification_id' => $this->last_notification_id,
-            'api_access_token' => $this->api_access_token,
-            'profile_image_id' => $this->profile_image_id,
-            'is_activated' => $this->is_activated,
-            'remember_token' => $this->remember_token,
+            'cover_image_id' => $this->cover_image_id,
         ];
     }
 

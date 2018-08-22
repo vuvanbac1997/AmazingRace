@@ -13,7 +13,8 @@ use App\Repositories\UserRepositoryInterface;
 use League\OAuth2\Server\AuthorizationServer;
 use Zend\Diactoros\Response as Psr7Response;
 use App\Http\Responses\API\V1\Response;
-
+use App\Repositories\TeamRepositoryInterface;
+use App\Models\Team;
 class AuthController extends Controller
 {
     /** @var \App\Services\UserServiceInterface */
@@ -25,15 +26,19 @@ class AuthController extends Controller
     /** @var AuthorizationServer */
     protected $server;
 
+    protected $teamRepository;
+
     public function __construct(
         UserServiceInterface        $userService,
         UserRepositoryInterface     $userRepository,
-        AuthorizationServer         $server
+        AuthorizationServer         $server,
+        TeamRepositoryInterface     $teamRepository
     )
     {
         $this->userService          = $userService;
         $this->userRepository       = $userRepository;
         $this->server               = $server;
+        $this->TeamRepository       = $teamRepository;
     }
 
     public function signIn(SignInRequest $request)
@@ -47,19 +52,16 @@ class AuthController extends Controller
                 'client_secret'
             ]
         );
-
+        $data['grant_type']='password';
         $check = $this->userService->checkClient($request);
         if( !$check ) {
             return Response::response(40101);
         }
-
-        $user = $this->userService->signIn($data);
-        if (empty($user)) {
-            return Response::response(40101);
-        }
-
+        return $data;
         $data['username'] = $data['email'];
-        $serverRequest = PsrServerRequest::createFromRequest($request, $data);
+        $data['password'] = Team::DEFAULT_PASSWORD;
+
+         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
 
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
     }

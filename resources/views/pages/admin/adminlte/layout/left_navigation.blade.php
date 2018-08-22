@@ -44,9 +44,7 @@
                 <li @if( $menu=='logs') class="active" @endif ><a href="{!! \URL::action('Admin\LogController@index') !!}"><i class="fa fa-sticky-note-o"></i> <span>@lang('admin.menu.log_system')</span></a></li>
             @endif
                 <li class="header">Competitor</li>
-            <li @if( $menu=='players') class="active" @endif ><a href="{!! \URL::action('Admin\PlayerController@index') !!}"><i class="fa fa-user"></i> <span>Players</span></a></li>
-            <li @if( $menu=='teams') class="active" @endif ><a href="{!! \URL::action('Admin\TeamController@index') !!}"><i class="fa fa-users"></i> <span>Teams</span></a></li>
-            <li @if( $menu=='companys') class="active" @endif ><a href="{!! \URL::action('Admin\CompanyController@index') !!}"><i class="fa fa-building"></i> <span>Companies</span></a></li>
+                <li @if( $menu=='teams') class="active" @endif ><a href="{!! \URL::action('Admin\TeamController@index') !!}"><i class="fa fa-users"></i> <span>Teams</span></a></li>
             <!-- %%SIDEMENU%% -->
         </ul>
     </section>

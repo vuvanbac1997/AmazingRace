@@ -22,5 +22,7 @@ class TeamRepository extends SingleKeyModelRepository implements TeamRepositoryI
         return [
         ];
     }
-
+    public function checkTeam($username){
+       return $username;
+    }
 }
