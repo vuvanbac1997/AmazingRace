@@ -164,4 +164,20 @@ $factory->define(App\Models\Team::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Challenge::class, function (Faker\Generator $faker) {
+    return [
+    ];
+});
+
+$factory->define(App\Models\Challenge::class, function (Faker\Generator $faker) {
+    return [
+        'id' => '',
+        'title' => '',
+        'content' => '',
+        'score' => '',
+        'answer' => '',
+        'cover_image_id' => '',
+    ];
+});
+
 /* NEW MODEL FACTORY */

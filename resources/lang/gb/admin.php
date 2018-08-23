@@ -261,6 +261,15 @@ return [
                 'cover_image_id' => 'Cover_image_id',
             ],
         ],
+        'challenges'   => [
+            'columns'  => [
+                'title' => 'Title',
+                'content' => 'Content',
+                'score' => 'Score',
+                'answer' => 'Answer',
+                'cover_image_id' => 'Cover_image_id',
+            ],
+        ],
         /* NEW PAGE STRINGS */
     ],
     'roles'      => [

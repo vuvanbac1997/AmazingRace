@@ -135,6 +135,33 @@ class TeamController extends Controller
         $input = $request->only(['username','display_name','password']);
         
         $input['is_enabled'] = $request->get('is_enabled', 0);
+
+        if ($request->hasFile('cover_image')){
+            $currentImage = $team->coverImage;
+            $file = $request->file('cover_image');
+
+            $newImage - $this->fileUploadService->upload(
+                'team_cover_image',
+                $file,
+                [
+                    'entity_type'   => 'team_cover_image',
+                    'entity_id'     => $team->id,
+                    'title'         => $team->name
+                ]
+            );
+
+            if (!empty($newImage)){
+                $input['cover_image_id'] = $newImage->id;
+
+                if (!empty($currentImage)){
+                    $this->fileUploadService->delete($currentImage);
+                }
+            } else {
+                //$imageUrl = $reque
+            }
+
+        }
+
         $this->teamRepository->update($team, $input);
 
         return redirect()->action('Admin\TeamController@show', [$id])

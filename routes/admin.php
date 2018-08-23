@@ -34,6 +34,7 @@
 
         \Route::post('signout', 'Admin\AuthController@postSignOut');
         \Route::resource('teams', 'Admin\TeamController');
+        \Route::resource('challenges', 'Admin\ChallengeController');
         /* NEW ADMIN RESOURCE ROUTE */
 
     });

@@ -45,6 +45,7 @@
             @endif
                 <li class="header">Competitor</li>
                 <li @if( $menu=='teams') class="active" @endif ><a href="{!! \URL::action('Admin\TeamController@index') !!}"><i class="fa fa-users"></i> <span>Teams</span></a></li>
+            <li @if( $menu=='challenges') class="active" @endif ><a href="{!! \URL::action('Admin\ChallengeController@index') !!}"><i class="fa fa-trophy"></i> <span>Challenges</span></a></li>
             <!-- %%SIDEMENU%% -->
         </ul>
     </section>

@@ -60,36 +60,11 @@
                 </h3>
             </div>
             <div class="box-body">
-                
+                <div class="container">
+                    
+                </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group @if ($errors->has('username')) has-error @endif">
-                                <label for="username">@lang('admin.pages.teams.columns.username')</label>
-                                <input type="text" class="form-control" id="username" name="username" required value="{{ old('username') ? old('username') : $team->username }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group @if ($errors->has('display_name')) has-error @endif">
-                                <label for="display_name">@lang('admin.pages.teams.columns.display_name')</label>
-                                <input type="text" class="form-control" id="display_name" name="display_name" required value="{{ old('display_name') ? old('display_name') : $team->display_name }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group @if ($errors->has('password')) has-error @endif">
-                                <label for="password">@lang('admin.pages.teams.columns.password')</label>
-                                <input type="text" class="form-control" id="password" name="password" required value="{{ old('password') ? old('password') : $team->password }}">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-5">
                             <div class="form-group text-center">
                                 @if( !empty($team->coverImage) )
                                     <img id="cover-image-preview"  style="max-width: 500px; width: 100%;" src="{!! $team->present()->coverImage->present()->url !!}" alt="" class="margin" />
@@ -103,18 +78,38 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group @if ($errors->has('username')) has-error @endif">
+                                <label for="username">@lang('admin.pages.teams.columns.username')</label>
+                                <input type="text" class="form-control" id="username" name="username" required value="{{ old('username') ? old('username') : $team->username }}">
+                            </div>
+
+                            <div class="form-group @if ($errors->has('display_name')) has-error @endif">
+                                <label for="display_name">@lang('admin.pages.teams.columns.display_name')</label>
+                                <input type="text" class="form-control" id="display_name" name="display_name" required value="{{ old('display_name') ? old('display_name') : $team->display_name }}">
+                            </div>
+                            <div class="form-group @if ($errors->has('password')) has-error @endif">
+                                <label for="password">@lang('admin.pages.teams.columns.password')</label>
+                                <input type="text" class="form-control" id="password" name="password" required value="{{ old('password') ? old('password') : $team->password }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="is_enabled">@lang('admin.pages.common.label.is_enabled')</label>
+                                <div class="switch">
+                                    <input id="is_enabled" name="is_enabled" value="1" @if( $team->is_enabled) checked @endif class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+                                    <label for="is_enabled"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        
                     </div>
 
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="is_enabled">@lang('admin.pages.common.label.is_enabled')</label>
-                            <div class="switch">
-                                <input id="is_enabled" name="is_enabled" value="1" @if( $team->is_enabled) checked @endif class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
-                                <label for="is_enabled"></label>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 

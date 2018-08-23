@@ -1,4 +1,4 @@
-@extends('pages.admin.' . config('view.admin') . '.layout.application', ['menu' => 'teams'] )
+@extends('pages.admin.' . config('view.admin') . '.layout.application', ['menu' => 'challenges'] )
 
 @section('metadata')
 @stop
@@ -14,11 +14,11 @@
 @stop
 
 @section('header')
-Teams
+Challenges
 @stop
 
 @section('breadcrumb')
-<li class="active">Teams</li>
+<li class="active">Challenges</li>
 @stop
 
 @section('content')
@@ -29,7 +29,7 @@ Teams
             <div class="col-sm-6">
                 <h3 class="box-title">
                     <p class="text-right">
-                        <a href="{!! action('Admin\TeamController@create') !!}" class="btn btn-block btn-primary btn-sm" style="width: 125px;">@lang('admin.pages.common.buttons.create')</a>
+                        <a href="{!! action('Admin\ChallengeController@create') !!}" class="btn btn-block btn-primary btn-sm" style="width: 125px;">@lang('admin.pages.common.buttons.create')</a>
                     </p>
                 </h3>
                 <br>
@@ -46,27 +46,28 @@ Teams
         <table class="table table-bordered">
             <tr>
                 <th style="width: 10px">{!! \PaginationHelper::sort('id', 'ID') !!}</th>
-                <th>{!! \PaginationHelper::sort('username', trans('admin.pages.teams.columns.username')) !!}</th>
-                <th>{!! \PaginationHelper::sort('display_name', trans('admin.pages.teams.columns.display_name')) !!}</th>
+                <th>{!! \PaginationHelper::sort('title', trans('admin.pages.challenges.columns.title')) !!}</th>
+                <th>{!! \PaginationHelper::sort('score', trans('admin.pages.challenges.columns.score')) !!}</th>
+
                 <th style="width: 40px">{!! \PaginationHelper::sort('is_enabled', trans('admin.pages.common.label.is_enabled')) !!}</th>
                 <th style="width: 40px">@lang('admin.pages.common.label.actions')</th>
             </tr>
-            @foreach( $teams as $team )
+            @foreach( $challenges as $challenge )
                 <tr>
-                    <td>{{ $team->id }}</td>
-               <td>{{ $team->username }}</td>
-               <td>{{ $team->display_name }}</td>
+                    <td>{{ $challenge->id }}</td>
+               <td>{{ $challenge->title }}</td>
+               <td>{{ $challenge->score }}</td>
 
                     <td>
-                        @if( $team->is_enabled )
+                        @if( $challenge->is_enabled )
                             <span class="badge bg-green">@lang('admin.pages.common.label.is_enabled_true')</span>
                         @else
                             <span class="badge bg-red">@lang('admin.pages.common.label.is_enabled_false')</span>
                         @endif
                     </td>
                     <td>
-                        <a href="{!! action('Admin\TeamController@show', $team->id) !!}" class="btn btn-block btn-primary btn-xs">@lang('admin.pages.common.buttons.edit')</a>
-                        <a href="#" class="btn btn-block btn-danger btn-xs delete-button" data-delete-url="{!! action('Admin\TeamController@destroy', $team->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
+                        <a href="{!! action('Admin\ChallengeController@show', $challenge->id) !!}" class="btn btn-block btn-primary btn-xs">@lang('admin.pages.common.buttons.edit')</a>
+                        <a href="#" class="btn btn-block btn-danger btn-xs delete-button" data-delete-url="{!! action('Admin\ChallengeController@destroy', $challenge->id) !!}">@lang('admin.pages.common.buttons.delete')</a>
                     </td>
                 </tr>
             @endforeach

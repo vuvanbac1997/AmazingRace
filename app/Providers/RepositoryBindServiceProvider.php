@@ -135,6 +135,11 @@ class RepositoryBindServiceProvider extends ServiceProvider {
             \App\Repositories\Eloquent\TeamRepository::class
         );
 
+        $this->app->singleton(
+            \App\Repositories\ChallengeRepositoryInterface::class,
+            \App\Repositories\Eloquent\ChallengeRepository::class
+        );
+
         /* NEW BINDING */
     }
 }
