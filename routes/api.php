@@ -7,7 +7,7 @@ Route::group(['namespace' => 'API'], function () {
             // Authentication
             Route::post('signin', 'AuthController@signIn');
             Route::post('signup', 'AuthController@signUp');
-            Route::post('token/refresh', 'AuthController@refreshToken');
+            //Route::post('token/refresh', 'AuthController@refreshToken');
         });
 
         Route::group(['middleware' => 'api.auth'], function () {

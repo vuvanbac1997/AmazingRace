@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard'     => 'web',
-        'passwords' => 'web',
+        'passwords' => 'users',
     ],
 
     /*
@@ -48,7 +48,7 @@ return [
 
         'api' => [
             'driver'   => 'passport',
-            'provider' => 'web',
+            'provider' => 'api',
         ],
     ],
 
@@ -77,6 +77,10 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model'  => App\Models\AdminUser::class,
+        ],
+       'api' => [
+            'driver' => 'eloquent',
+            'model'  => App\Models\Team::class,
         ],
     ],
 

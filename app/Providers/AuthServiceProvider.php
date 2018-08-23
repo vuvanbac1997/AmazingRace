@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Laravel\Passport\Console\ClientCommand;
 use Laravel\Passport\Console\InstallCommand;
 use Laravel\Passport\Console\KeysCommand;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -30,5 +31,6 @@ class AuthServiceProvider extends ServiceProvider
             ClientCommand::class,
             KeysCommand::class,
         ]);
+        Passport::routes();
     }
 }

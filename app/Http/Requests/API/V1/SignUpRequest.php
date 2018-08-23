@@ -21,7 +21,7 @@ class SignUpRequest extends Request
     public function rules()
     {
         return [
-            'name'          => 'required|string',
+            // 'name'          => 'required|string',
             'email'         => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'password'      => 'required|min:6',
             'grant_type'    => 'required',

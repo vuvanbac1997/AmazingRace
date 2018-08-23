@@ -6,11 +6,9 @@ use Laravel\Passport\HasApiTokens;
 
 class Team extends AuthenticatableBase
 {   
+    const DEFAULT_PASSWORD = '123';
+
     use HasApiTokens;
-
-    const DEFAULT_PASSWORD = 'team_api';
-
-    //use SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -48,21 +46,23 @@ class Team extends AuthenticatableBase
         parent::observe(new \App\Observers\TeamObserver);
     }
 
+   
     public function findForPassport($identifier)
     {
         return $this->where('username', $identifier)->first();
     }
 
-    public function getAuthPassword() 
-    { 
-        return Hash::make(self::DEFAULT_PASSWORD); 
- 
+    public function getAuthPassword()
+    {
+        return Hash::make(self::DEFAULT_PASSWORD);
+
     }
 
-    public function accessTokens() 
-    { 
-        return $this->hasMany(\App\Models\OauthAccessToken::class, 'user_id', 'id'); 
-    } 
+
+    public function accessTokens()
+    {
+        return $this->hasMany(\App\Models\OauthAccessToken::class, 'user_id', 'id');
+    }
     // Relations
     public function coverImage()
     {

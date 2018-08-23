@@ -14,7 +14,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use Zend\Diactoros\Response as Psr7Response;
 use App\Http\Responses\API\V1\Response;
 use App\Repositories\TeamRepositoryInterface;
-use App\Models\Team;
+use App\Services\TeamServiceInterface;
 class AuthController extends Controller
 {
     /** @var \App\Services\UserServiceInterface */
@@ -26,19 +26,23 @@ class AuthController extends Controller
     /** @var AuthorizationServer */
     protected $server;
 
-    protected $teamRepository;
+    /** @var \App\Services\TeamServiceInterface */
+    protected $teamService;
 
     public function __construct(
         UserServiceInterface        $userService,
         UserRepositoryInterface     $userRepository,
         AuthorizationServer         $server,
-        TeamRepositoryInterface     $teamRepository
+        TeamRepositoryInterface     $teamRepository,
+        TeamServiceInterface        $teamService
+
     )
     {
         $this->userService          = $userService;
         $this->userRepository       = $userRepository;
         $this->server               = $server;
         $this->TeamRepository       = $teamRepository;
+        $this->TeamService          = $teamService;
     }
 
     public function signIn(SignInRequest $request)
@@ -52,16 +56,17 @@ class AuthController extends Controller
                 'client_secret'
             ]
         );
-        $data['grant_type']='password';
+        $data['grant_type'] = 'password';
+
         $check = $this->userService->checkClient($request);
         if( !$check ) {
             return Response::response(40101);
         }
-        return $data;
+        //data
         $data['username'] = $data['email'];
-        $data['password'] = Team::DEFAULT_PASSWORD;
-
-         $serverRequest = PsrServerRequest::createFromRequest($request, $data);
+        $data['password'] = '123';
+        
+        $serverRequest = PsrServerRequest::createFromRequest($request, $data);
 
         return $this->server->respondToAccessTokenRequest($serverRequest, new Psr7Response);
     }
@@ -70,7 +75,7 @@ class AuthController extends Controller
     {
         $data = $request->only(
             [
-                'name',
+                // 'name',
                 'email',
                 'password',
                 'grant_type',
