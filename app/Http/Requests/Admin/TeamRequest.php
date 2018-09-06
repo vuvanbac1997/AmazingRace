@@ -31,7 +31,14 @@ class TeamRequest extends BaseRequest
      */
     public function rules()
     {
-        return $this->teamRepository->rules();
+        $id = ($this->method() == 'PUT') ? $this->route('team') : 0;
+
+        $rules = [
+            'username'   => 'required|string|unique:teams,username,' . $id,
+            'display_name' => 'required|string|unique:teams,display_name,' . $id
+        ];
+
+        return $rules;
     }
 
     public function messages()

@@ -100,5 +100,22 @@ return [
             'local_type'  => 'common',
             'local_path'  => 'img/ogp/'
         ],
+        'team_cover_image'  => [
+            'name'        => 'team_cover_image',
+            'type'        => 'image',
+            'region'      => env('AWS_IMAGE_REGION'),
+            'buckets'     => [
+                env('AWS_IMAGE_BUCKET'),
+            ],
+            'size'        => [1920, 1080],
+            'thumbnails'  => [
+                [100, 100],
+                [200, 200]
+            ],
+            'seed_prefix' => 'team_profile',
+            'format'      => 'png',
+            'local_type'  => 'common',
+            'local_path'  => 'img/teams/'
+        ],
     ],
 ];

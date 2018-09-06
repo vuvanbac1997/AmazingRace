@@ -3,9 +3,13 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\File;
 use App\Repositories\TeamRepositoryInterface;
 use App\Http\Requests\Admin\TeamRequest;
 use App\Http\Requests\PaginationRequest;
+use App\Services\FileUploadServiceInterface;
+use App\Repositories\ImageRepositoryInterface;
+use phpDocumentor\Reflection\Types\This;
 
 class TeamController extends Controller
 {
@@ -13,12 +17,19 @@ class TeamController extends Controller
     /** @var \App\Repositories\TeamRepositoryInterface */
     protected $teamRepository;
 
+    protected $fileUploadService;
+
+    protected $imageRepository;
 
     public function __construct(
-        TeamRepositoryInterface $teamRepository
+        TeamRepositoryInterface $teamRepository,
+        FileUploadServiceInterface $fileUploadService,
+        ImageRepositoryInterface $imageRepository
     )
     {
         $this->teamRepository = $teamRepository;
+        $this->fileUploadService = $fileUploadService;
+        $this->imageRepository = $imageRepository;
     }
 
     /**
@@ -41,7 +52,7 @@ class TeamController extends Controller
         return view(
             'pages.admin.' . config('view.admin') . '.teams.index',
             [
-                'teams'    => $teams,
+                'teams'         => $teams,
                 'count'         => $count,
                 'paginate'      => $paginate,
             ]
@@ -79,6 +90,23 @@ class TeamController extends Controller
 
         if (empty( $team )) {
             return redirect()->back()->withErrors(trans('admin.errors.general.save_failed'));
+        }
+        if ($request->hasFile('cover_image')) {
+            $file = $request->file('cover_image');
+
+            $image = $this->fileUploadService->upload(
+                'team_cover_image',
+                $file,
+                [
+                    'entity_type' => 'team_cover_image',
+                    'entity_id'   => $team->id,
+                    'title'       => $request->input('display_name', ''),
+                ]
+            );
+
+            if (!empty($image)) {
+                $this->teamRepository->update($team, ['cover_image_id' => $image->id]);
+            }
         }
 
         return redirect()->action('Admin\TeamController@index')
@@ -133,37 +161,40 @@ class TeamController extends Controller
             abort(404);
         }
         $input = $request->only(['username','display_name','password']);
-        
+        $input['password'] = md5($input['password']);
+
         $input['is_enabled'] = $request->get('is_enabled', 0);
-
-        if ($request->hasFile('cover_image')){
-            $currentImage = $team->coverImage;
+        $this->teamRepository->update($team, $input);
+        if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
-
-            $newImage - $this->fileUploadService->upload(
+            $newImage = $this->fileUploadService->upload(
                 'team_cover_image',
                 $file,
                 [
-                    'entity_type'   => 'team_cover_image',
-                    'entity_id'     => $team->id,
-                    'title'         => $team->name
+                    'entity_type' => 'team_cover_image',
+                    'entity_id'   => $team->id,
+                    'title'       => $request->input('display_name', ''),
                 ]
             );
 
-            if (!empty($newImage)){
-                $input['cover_image_id'] = $newImage->id;
-
-                if (!empty($currentImage)){
-                    $this->fileUploadService->delete($currentImage);
-                }
-            } else {
-                //$imageUrl = $reque
+            if (!empty($newImage)) {
+                $this->teamRepository->update($team, ['cover_image_id' => $newImage->id]);
             }
+        } else {
+            $imageUrl = $request->get('image_url', '');
+            if( $imageUrl != '' ) {
+                $newImage = $this->imageRepository->create(
+                    [
+                        'url'      => $imageUrl,
+                        'is_local' => false
+                    ]
+                );
 
+                if (!empty($newImage)) {
+                    $this->songRepository->update($song, ['cover_image_id' => $newImage->id]);
+                }
+            }
         }
-
-        $this->teamRepository->update($team, $input);
-
         return redirect()->action('Admin\TeamController@show', [$id])
                     ->with('message-success', trans('admin.messages.general.update_success'));
     }

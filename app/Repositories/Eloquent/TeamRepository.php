@@ -23,6 +23,10 @@ class TeamRepository extends SingleKeyModelRepository implements TeamRepositoryI
         ];
     }
     public function checkTeam($username){
-       return $username;
+      $team = $this->findByUsername($username);
+      if (empty($team)){
+          return 0;
+      }
+      return 1;
     }
 }

@@ -22,14 +22,15 @@ class SignUpRequest extends Request
     {
         return [
             // 'name'          => 'required|string',
-            'email'         => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'password'      => 'required|min:6',
-            'grant_type'    => 'required',
-            'client_id'     => 'required',
-            'client_secret' => 'required',
-            'telephone'     => 'string',
-            'birthday'      => 'date_format:Y-m-d',
-            'locale'        => 'string'
+            'username'          => 'required|unique:teams|min:6',
+            'display_name'      => 'required',
+            'password'          => 'required|min:6',
+//            'grant_type'    => 'required',
+//            'client_id'     => 'required',
+//            'client_secret' => 'required',
+//            'telephone'     => 'string',
+//            'birthday'      => 'date_format:Y-m-d',
+//            'locale'        => 'string'
         ];
     }
 

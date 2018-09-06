@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group @if ($errors->has('password')) has-error @endif">
                                 <label for="password">@lang('admin.pages.teams.columns.password')</label>
-                                <input type="text" class="form-control" id="password" name="password" required value="{{ old('password') ? old('password') : $team->password }}">
+                                <input type="text" class="form-control" id="password" name="password" required>
                             </div>
                             <div class="form-group">
                                 <label for="is_enabled">@lang('admin.pages.common.label.is_enabled')</label>

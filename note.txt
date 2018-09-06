@@ -1,1 +1,37 @@
-trong http/ middleware api web đã xây dựng sẵn rồi
+﻿trong http/ middleware api web đã xây dựng sẵn rồi
+"Danh sách các màn hình (cần bổ sung thêm):
+
+0. 
+Chung cho các user:
+- Đăng nhập: username, password
+
+		- Quản lý thông tin cá nhân: tên đăng nhập, đổi tên team, đổi password
+
+1. 
+Người chơi:
+- Màn hình chi tiết game đang chơi: tổng điểm hiện tại, danh sách các thử thách
+	
+- Màn hình chi tiết 1 thử thách: câu hỏi, gợi ý, số điểm, thời gian còn lại
+	
+- Màn hình trả lời câu hỏi: nội dung trả lời (text hoặc image), kết quả đúng/sai
+
+	- Thông báo kết quả trả lời đúng/sai
+
+2. HLV:
+- Xem danh sách các game (1-3 game)
+
+	- Chi tiết game: các team, điểm của từng team, danh sách thử thách, thời gian còn lại, nút kích hoạt thử thách
+
+	- Màn hình chi tiết thử thách: code, câu hỏi, gợi ý, số điểm, tổng thời gian tính từ lúc bắt đầu
+
+	- Màn hình nhập điểm: tên team, điểm, thử thách
+
+3. 
+Admin/ BTC:
+- Tạo user: role là HLV hoặc người chơi 
+
+	- Danh sách các game đang diễn ra (giống với của HLV nhưng có thể xem của tất cả HLV)
+	
+- Tạo game: tên game, code, số thử thách, ngày bắt đầu, ngày kết thúc
+
+	- Tạo thử thách: câu hỏi, gợi ý, số điểm, thời gian cho mỗi thử thách"

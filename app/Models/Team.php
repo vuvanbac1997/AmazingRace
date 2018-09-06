@@ -6,7 +6,7 @@ use Laravel\Passport\HasApiTokens;
 
 class Team extends AuthenticatableBase
 {   
-    const DEFAULT_PASSWORD = '123';
+    //const DEFAULT_PASSWORD = 'team_api';
 
     use HasApiTokens;
 
@@ -54,8 +54,9 @@ class Team extends AuthenticatableBase
 
     public function getAuthPassword()
     {
-        return Hash::make(self::DEFAULT_PASSWORD);
-
+        // tra ve password cua nguoi dung tren csdl da bi hash
+        return $this->password;
+        //return Hash::make(self::DEFAULT_PASSWORD);
     }
 
 

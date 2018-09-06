@@ -10,9 +10,9 @@ Route::group(['namespace' => 'API'], function () {
             //Route::post('token/refresh', 'AuthController@refreshToken');
         });
 
-        Route::group(['middleware' => 'api.auth'], function () {
+        Route::group(['middleware' => ['api.client', 'api.user']], function () {
             Route::resource('articles', 'ArticleController');
-
+            Route::get('team/{id}', 'TeamController@detail');
             Route::post('signout', 'AuthController@postSignOut');
         });
     });
